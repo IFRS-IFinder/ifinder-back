@@ -1,5 +1,8 @@
+using IFinder.Application.Contracts.Documents.Requests.User;
+using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Application.Implementations.Services;
 using IFinder.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IFinder.WebApi.Controllers;
@@ -24,4 +27,5 @@ public class UserController : ControllerBase
 
         return CreatedAtAction(nameof(Get), new { Id = newUser.Id }, newUser);
     }
+    
 }

@@ -1,7 +1,9 @@
+using IFinder.Application.Contracts.Documents.Responses;
+
 namespace IFinder.Core.Security
 {
     public interface ITokenService
     {
-        string GenerateToken(string user);
+        string GenerateToken(LoginUserResponse user);
     }
 }
