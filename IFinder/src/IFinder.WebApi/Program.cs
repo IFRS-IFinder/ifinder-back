@@ -1,6 +1,8 @@
 using IFinder.Application.Contracts.Services;
 using IFinder.Application.Implementations.Services;
 using IFinder.Core.Security;
+using IFinder.Domain.Contracts.Repositories;
+using IFinder.Infraestructure.Repositories;
 using IFinder.WebApi.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -73,7 +75,7 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
     return new MongoClient(settings);
 });
 
-builder.Services.AddScoped<IMongoDatabase>(sp =>
+builder.Services.AddScoped(sp =>
 {
     IMongoClient client = sp.GetRequiredService<IMongoClient>();
     return client.GetDatabase("IFinder");
@@ -81,6 +83,9 @@ builder.Services.AddScoped<IMongoDatabase>(sp =>
 
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IAuthService,AuthService>();
+
+builder.Services.AddScoped<IUserRepository, UserRespository>();
+
 
 var app = builder.Build();
 

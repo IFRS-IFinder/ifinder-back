@@ -4,7 +4,7 @@ namespace IFinder.Application.Contracts.Services
 {
     public interface IUserService
     {
-        Task<List<User>> GetAsync();
+        Task<List<User>> GetAllAsync();
         Task CreateAsync(User newUser);
     }
 }

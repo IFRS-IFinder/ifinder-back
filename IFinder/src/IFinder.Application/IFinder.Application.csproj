@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IFinder.Domain\IFinder.Domain.csproj" />
-    <ProjectReference Include="..\IFinder.Infraestructure\IFinder.Infraestructure.csproj" />
+    <!--<ProjectReference Include="..\IFinder.Infraestructure\IFinder.Infraestructure.csproj" />-->
   </ItemGroup>
 
 </Project>

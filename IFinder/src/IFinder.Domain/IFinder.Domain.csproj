@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.21.0" />
   </ItemGroup>
 

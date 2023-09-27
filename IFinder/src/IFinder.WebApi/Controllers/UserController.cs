@@ -1,8 +1,8 @@
 using IFinder.Application.Contracts.Documents.Requests.User;
 using IFinder.Application.Contracts.Documents.Responses;
+using IFinder.Application.Contracts.Services;
 using IFinder.Application.Implementations.Services;
 using IFinder.Domain.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IFinder.WebApi.Controllers;
@@ -11,21 +11,21 @@ namespace IFinder.WebApi.Controllers;
 [Route("api/users")]
 public class UserController : ControllerBase
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
 
-    public UserController(UserService userService) => 
+    public UserController(IUserService userService) => 
         _userService = userService;
 
     [HttpGet]
     public async Task<List<User>> Get() =>
-        await _userService.GetAsync();
+        await _userService.GetAllAsync();
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody]User newUser)
+    public async Task<IActionResult> Create([FromBody] User newUser)
     {
         await _userService.CreateAsync(newUser);
 
-        return CreatedAtAction(nameof(Get), new { Id = newUser.Id }, newUser);
+        return CreatedAtAction(nameof(Get), new { newUser.Id }, newUser);
     }
-    
+
 }

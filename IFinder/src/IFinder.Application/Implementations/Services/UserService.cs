@@ -1,21 +1,21 @@
 using IFinder.Application.Contracts.Services;
+using IFinder.Domain.Contracts.Repositories;
 using IFinder.Domain.Models;
-using MongoDB.Driver;
 
 namespace IFinder.Application.Implementations.Services;
 
 public class UserService : IUserService
 {
-    private readonly IMongoCollection<User> _userCollection;
+    private readonly IUserRepository _userRepository;
 
     public UserService(
-        IMongoDatabase database
+        IUserRepository userRepository
     )
     {
-        _userCollection = database.GetCollection<User>("AppUsers");
+        _userRepository = userRepository;
     }
 
-    public async Task<List<User>> GetAsync() => await _userCollection.Find(_ => true).ToListAsync();
+    public async Task<List<User>> GetAllAsync() => await _userRepository.GetAllAsync();
 
-    public async Task CreateAsync(User newUser) => await _userCollection.InsertOneAsync(newUser);
+    public async Task CreateAsync(User newUser) => await _userRepository.InsertAsync(newUser);
 }
