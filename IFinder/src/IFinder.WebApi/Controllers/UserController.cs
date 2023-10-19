@@ -1,7 +1,4 @@
-using IFinder.Application.Contracts.Documents.Requests.User;
-using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Application.Contracts.Services;
-using IFinder.Application.Implementations.Services;
 using IFinder.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +22,7 @@ public class UserController : ControllerBase
     {
         await _userService.CreateAsync(newUser);
 
-        return CreatedAtAction(nameof(Get), new { newUser.Id }, newUser);
+        return CreatedAtAction(nameof(Get), newUser);
     }
 
 }

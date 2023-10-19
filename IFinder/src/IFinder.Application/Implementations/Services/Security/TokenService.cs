@@ -1,14 +1,16 @@
-using IFinder.Application.Contracts.Documents.Responses;
+using IFinder.Application.Contracts.Documents.Dtos;
+using IFinder.Application.Contracts.Services.Security;
+using IFinder.Core.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace IFinder.Core.Security
+namespace IFinder.Application.Implementations.Services.Security
 {
     public class TokenService : ITokenService
     {
-        public string GenerateToken(LoginUserResponse user)
+        public string GenerateToken(LoginUserDto user)
         {
             var token_handler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(TokenSettings.SecretKey);
@@ -16,8 +18,8 @@ namespace IFinder.Core.Security
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("Id", user.User.Id),
-                    new Claim(ClaimTypes.Name, user.User.Name)
+                    new Claim("Id", user.Id),
+                    new Claim(ClaimTypes.Name, user.Name)
                 }),
                 Expires = DateTime.UtcNow.AddHours(TokenSettings.ExpiresInHours),
                 SigningCredentials = new SigningCredentials( 

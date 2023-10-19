@@ -3,23 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{4B1C878E-1C9A-41BD-AF57-AC5DF7D80781}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Application", "{4B1C878E-1C9A-41BD-AF57-AC5DF7D80781}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFinder.Application", "src\IFinder.Application\IFinder.Application.csproj", "{3C99BBE3-CC51-4198-8DBC-EE7F02E1520F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{75609F23-65B8-4AB4-8DB5-2E342518EF5D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infraestructure", "4 - Infraestructure", "{75609F23-65B8-4AB4-8DB5-2E342518EF5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFinder.Infraestructure", "src\IFinder.Infraestructure\IFinder.Infraestructure.csproj", "{7600DD30-3F56-4E10-AF6F-D04914A40620}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{07142BAF-A9B8-4D10-A1C7-F2C6F4EC47DE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Core", "5 - Core", "{07142BAF-A9B8-4D10-A1C7-F2C6F4EC47DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFinder.Core", "src\IFinder.Core\IFinder.Core.csproj", "{B31F07DA-7469-40F1-AA55-67884A8A328E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{B66009EE-D29C-4935-B868-36BAE91C2F12}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{B66009EE-D29C-4935-B868-36BAE91C2F12}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFinder.Domain", "src\IFinder.Domain\IFinder.Domain.csproj", "{6CFD23E4-F564-498E-834F-B1CDA82FFB5E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{90C794CA-023C-4740-8F74-997F00625981}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - WebApi", "1 - WebApi", "{90C794CA-023C-4740-8F74-997F00625981}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFinder.WebApi", "src\IFinder.WebApi\IFinder.WebApi.csproj", "{B80275F3-8AF0-4540-9496-89FCAF46E022}"
 EndProject

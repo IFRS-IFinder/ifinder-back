@@ -10,7 +10,23 @@ public class UserRespository : BaseRepository<User>, IUserRepository
 
     public override Task InsertAsync(User entity)
     {
-        entity.Password.HashPassword();
+        entity.Password = PasswordHasher.HashPassword(entity.Password);
         return base.InsertAsync(entity);
+    }
+
+    public async Task<User?> GetUserAuthenticateAsync(string email, string password)
+    {
+        // var user = await _collection.FindAsync(u => u.Email == email.ToLower());
+        //
+        //
+        
+        var filter = Builders<User>.Filter.Eq("email", email);
+
+        var user = await _collection.Find(filter).FirstOrDefaultAsync();
+        
+        if (user is not null && PasswordHasher.VerifyPassword(password, user.Password))
+            return user;
+
+        return null;
     }
 }

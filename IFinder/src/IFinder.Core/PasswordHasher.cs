@@ -8,7 +8,7 @@ namespace IFinder.Core
         private const int HashSize = 20;
         private const int Iterations = 10000;
         
-        public static string HashPassword(this string password)
+        public static string HashPassword(string password)
         {
             byte[] salt;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[SaltSize]);

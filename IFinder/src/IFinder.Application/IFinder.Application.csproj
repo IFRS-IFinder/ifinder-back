@@ -9,11 +9,17 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0-rc.1.23419.4" />
     <PackageReference Include="MongoDB.Driver" Version="2.21.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IFinder.Core\IFinder.Core.csproj" />
     <ProjectReference Include="..\IFinder.Domain\IFinder.Domain.csproj" />
     <!--<ProjectReference Include="..\IFinder.Infraestructure\IFinder.Infraestructure.csproj" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Implementations\Validators\" />
   </ItemGroup>
 
 </Project>

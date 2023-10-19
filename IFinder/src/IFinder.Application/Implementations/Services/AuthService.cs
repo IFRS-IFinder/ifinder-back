@@ -1,35 +1,36 @@
+using IFinder.Application.Contracts.Documents.Dtos;
 using IFinder.Application.Contracts.Documents.Requests.User;
 using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Application.Contracts.Services;
+using IFinder.Application.Contracts.Services.Security;
 using IFinder.Application.Implementations.Mappers;
-using IFinder.Domain.Models;
-using MongoDB.Driver;
+using IFinder.Domain.Contracts.Repositories;
+using System.Net;
 
 namespace IFinder.Application.Implementations.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IMongoCollection<User> _userCollection;
+        private readonly IUserRepository _userRepository;
+        private readonly ITokenService _tokenService;
         
-        public AuthService(
-            IMongoDatabase database
-        )
+        public AuthService(IUserRepository userRepository)
         {
-            _userCollection = database.GetCollection<User>("AppUsers");
+            _userRepository = userRepository;
         }
 
-        public async Task<LoginUserResponse> AuthenticateAsync(LoginUserRequest request)
+        public async Task<Response<LoginUserDto>> AuthenticateAsync(LoginUserRequest request)
         {
-            // tests //
-            var user = await _userCollection.FindAsync(u => u.Email.ToLower() == request.Email.ToLower());
 
-            if (user is null) return null;
+            var user = await _userRepository.GetUserAuthenticateAsync(request.Email, request.Password);
 
-            return new LoginUserResponse(
-                user
-                    .FirstOrDefault()
-                    .ToLoginUserDto()
-            );
+            if (user is null)
+                return new Response<LoginUserDto>(HttpStatusCode.Unauthorized, "Email ou senha incorretos!");
+
+            var userDto = user.ToLoginUserDto();
+            userDto.Token = _tokenService.GenerateToken(userDto);
+            
+            return new Response<LoginUserDto>(userDto);
         }
     }
 }
