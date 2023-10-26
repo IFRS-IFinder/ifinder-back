@@ -13,10 +13,11 @@ namespace IFinder.Application.Implementations.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly ITokenService _tokenService;
-        
-        public AuthService(IUserRepository userRepository)
+
+        public AuthService(IUserRepository userRepository, ITokenService tokenService)
         {
             _userRepository = userRepository;
+            _tokenService = tokenService;
         }
 
         public async Task<Response<LoginUserDto>> AuthenticateAsync(LoginUserRequest request)
@@ -28,8 +29,9 @@ namespace IFinder.Application.Implementations.Services
                 return new Response<LoginUserDto>(HttpStatusCode.Unauthorized, "Email ou senha incorretos!");
 
             var userDto = user.ToLoginUserDto();
+            userDto.Token = "a";
             userDto.Token = _tokenService.GenerateToken(userDto);
-            
+
             return new Response<LoginUserDto>(userDto);
         }
     }

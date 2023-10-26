@@ -1,5 +1,7 @@
 using IFinder.Application.Contracts.Services;
+using IFinder.Application.Contracts.Services.Security;
 using IFinder.Application.Implementations.Services;
+using IFinder.Application.Implementations.Services.Security;
 using IFinder.Core.Security;
 using IFinder.Domain.Contracts.Repositories;
 using IFinder.Infraestructure.Repositories;
@@ -83,6 +85,7 @@ builder.Services.AddScoped(sp =>
 
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IAuthService,AuthService>();
+builder.Services.AddSingleton<ITokenService, TokenService>();
 
 builder.Services.AddScoped<IUserRepository, UserRespository>();
 

@@ -20,7 +20,7 @@ public class UserRespository : BaseRepository<User>, IUserRepository
         //
         //
         
-        var filter = Builders<User>.Filter.Eq("email", email);
+        var filter = Builders<User>.Filter.Eq("Email", email);
 
         var user = await _collection.Find(filter).FirstOrDefaultAsync();
         
