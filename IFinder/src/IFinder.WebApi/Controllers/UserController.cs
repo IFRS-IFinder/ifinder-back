@@ -25,4 +25,12 @@ public class UserController : ControllerBase
         return CreatedAtAction(nameof(Get), newUser);
     }
 
+    [HttpPost]
+    [Route("{id}")]
+    public async Task<IActionResult> Edit([FromRoute] string idUser, [FromBody] User newUser)
+    {
+        await _userService.EditAsync(idUser, newUser);
+
+        return CreatedAtAction(nameof(Get), newUser);
+    }
 }

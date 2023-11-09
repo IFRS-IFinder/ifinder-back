@@ -15,7 +15,13 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<List<User>> GetAllAsync() => await _userRepository.GetAllAsync();
+    public async Task<List<User>> GetAllAsync() 
+        => await _userRepository.GetAllAsync();
 
-    public async Task CreateAsync(User newUser) => await _userRepository.InsertAsync(newUser);
+    public async Task CreateAsync(User newUser) 
+        => await _userRepository.InsertAsync(newUser);
+
+    public async Task EditAsync(string idUser, User newUser)
+        => await _userRepository.EditAsync(idUser, newUser);
+    
 }
