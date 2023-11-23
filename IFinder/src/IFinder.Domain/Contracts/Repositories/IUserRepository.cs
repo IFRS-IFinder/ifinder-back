@@ -6,6 +6,6 @@ namespace IFinder.Domain.Contracts.Repositories
     {
         Task<User?> GetUserAuthenticateAsync(string email, string password);
         Task<bool> ExistsByEmail(string email);
-
+        Task<User?> EditUserAsync(string Id, User editUser);
     }
 }

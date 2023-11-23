@@ -19,11 +19,7 @@ namespace IFinder.Infraestructure.Repositories
             => await _collection.Find(_ => true).ToListAsync();
 
         public virtual async Task InsertAsync(T entity) 
-            => await _collection.InsertOneAsync(entity);
-
-        public virtual async Task EditAsync(string id, T entity) 
-            => await _collection.UpdateOneAsync(Builders<T>.Filter.Eq("Id", id), Builders<T>.Update.AddToSet());
-        
+            => await _collection.InsertOneAsync(entity);     
 
     }
 }

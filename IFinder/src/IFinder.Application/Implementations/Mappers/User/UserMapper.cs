@@ -5,12 +5,13 @@ namespace IFinder.Application.Implementations.Mappers;
 
 public static class UserMapper
 {
-    public static User ToLoginUserDto (this User user)
+    public static User ToUserDto (this User user)
     {
         return new User
         {
             Id = user.Id,
-            Name = user.Name
+            Name = user.Name,
+            Email = user.Email
         };
     }
 }

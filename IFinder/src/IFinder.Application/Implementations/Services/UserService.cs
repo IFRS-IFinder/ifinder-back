@@ -22,6 +22,6 @@ public class UserService : IUserService
         => await _userRepository.InsertAsync(newUser);
 
     public async Task EditAsync(string idUser, User newUser)
-        => await _userRepository.EditAsync(idUser, newUser);
+        => await _userRepository.EditUserAsync(idUser, newUser);
     
 }

@@ -41,11 +41,13 @@ namespace IFinder.Application.Implementations.Services
             if (!userEmailExists)
                 return new Response<RegisterUserDto>(HttpStatusCode.UnprocessableEntity, "Email já existe!");
 
-            var userDto = request.();
-            userDto.Token = "a";
-            userDto.Token = _tokenService.GenerateToken(userDto);
-
-            return new Response<LoginUserDto>(userDto);
+            //return new Response<LoginUserDto>(userDto);
+            return new Response<RegisterUserDto>(new RegisterUserDto
+            {
+                Id = "asa",
+                Name = "asa",
+                Token = ""
+            });
         }
     }
 }
