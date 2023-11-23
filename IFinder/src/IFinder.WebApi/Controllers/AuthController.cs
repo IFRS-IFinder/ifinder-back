@@ -31,5 +31,20 @@ namespace IFinder.WebApi.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost]
+        [Route("register")]
+        [AllowAnonymous]
+        public async Task<ActionResult<Response<LoginUserDto>>> Register([FromBody] RegisterUserRequest request)
+        {
+            // TODO: validacao dos dados da request 
+
+            var response = await _authService.RegisterAsync(request);
+
+            if (response.IsErrorStatusCode())
+                return StatusCode(response.GetErrorCode(), response.GetErrorMessage());
+
+            return Ok(response);
+        }
     }
 }

@@ -5,5 +5,7 @@ namespace IFinder.Domain.Contracts.Repositories
     {
         Task<List<T>> GetAllAsync();
         Task InsertAsync(T entity);
+        Task EditAsync(string id, T entity);
+
     }
 }

@@ -7,5 +7,6 @@ namespace IFinder.Application.Contracts.Services
     public interface IAuthService
     {
         Task<Response<LoginUserDto>> AuthenticateAsync(LoginUserRequest request);
+        Task<Response<RegisterUserDto>> RegisterAsync(RegisterUserRequest request);
     }
 }

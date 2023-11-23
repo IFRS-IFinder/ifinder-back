@@ -33,5 +33,19 @@ namespace IFinder.Application.Implementations.Services
 
             return new Response<LoginUserDto>(userDto);
         }
+
+        public async Task<Response<RegisterUserDto>> RegisterAsync(RegisterUserRequest request)
+        {
+            var userEmailExists = await _userRepository.ExistsByEmail(request.Email);
+
+            if (!userEmailExists)
+                return new Response<RegisterUserDto>(HttpStatusCode.UnprocessableEntity, "Email já existe!");
+
+            var userDto = request.();
+            userDto.Token = "a";
+            userDto.Token = _tokenService.GenerateToken(userDto);
+
+            return new Response<LoginUserDto>(userDto);
+        }
     }
 }
