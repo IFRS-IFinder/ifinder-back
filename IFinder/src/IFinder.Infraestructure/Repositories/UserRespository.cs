@@ -19,8 +19,7 @@ public class UserRespository : BaseRepository<User>, IUserRepository
     {
         // var user = await _collection.FindAsync(u => u.Email == email.ToLower());
         //
-        //
-
+        
         var filter = Builders<User>.Filter.Eq("Email", email);
 
         var user = await _collection.Find(filter).FirstOrDefaultAsync();
