@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using System.Text;
+using IFootball.Application.Contracts.Services.Core;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,6 +68,11 @@ builder.Services.AddAuthentication(opt =>
     };
 });
 
+// Disable automatic validation controler
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 /* DI */
 builder.Services.AddSingleton<IMongoClient>(sp =>
@@ -86,7 +93,8 @@ builder.Services.AddScoped(sp =>
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddSingleton<ITokenService, TokenService>();
-
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUserRepository, UserRespository>();
 
 

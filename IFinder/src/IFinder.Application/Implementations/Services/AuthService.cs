@@ -6,6 +6,7 @@ using IFinder.Application.Contracts.Services.Security;
 using IFinder.Application.Implementations.Mappers;
 using IFinder.Domain.Contracts.Repositories;
 using System.Net;
+using IFinder.Domain.Models;
 
 namespace IFinder.Application.Implementations.Services
 {
@@ -36,17 +37,30 @@ namespace IFinder.Application.Implementations.Services
 
         public async Task<Response<RegisterUserDto>> RegisterAsync(RegisterUserRequest request)
         {
-            var userEmailExists = await _userRepository.ExistsByEmail(request.Email);
+            var userEmailExists = await _userRepository.UserExistsByEmail(request.Email);
 
-            if (!userEmailExists)
-                return new Response<RegisterUserDto>(HttpStatusCode.UnprocessableEntity, "Email já existe!");
+            if (userEmailExists)
+                return new Response<RegisterUserDto>(HttpStatusCode.UnprocessableEntity, "Email jï¿½ existe!");
 
-            //return new Response<LoginUserDto>(userDto);
+            var name = new Random();
+            
+            var user = new User()
+            {
+                Name = name.Next().ToString(),
+                Email = request.Email,
+                Password = request.Password,
+                Sex = request.Sex,
+                Age = request.Age,
+                Description = request.Description,
+                Hobbies = request.Hobbies,
+            };
+            await _userRepository.InsertAsync(user);
+
+            
             return new Response<RegisterUserDto>(new RegisterUserDto
             {
-                Id = "asa",
-                Name = "asa",
-                Token = ""
+                Id = user.Id,
+                Name = user.Name
             });
         }
     }

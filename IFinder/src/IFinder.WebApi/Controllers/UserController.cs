@@ -1,3 +1,6 @@
+using IFinder.Application.Contracts.Documents.Dtos;
+using IFinder.Application.Contracts.Documents.Requests.User;
+using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Application.Contracts.Services;
 using IFinder.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,21 +19,12 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<List<User>> Get() =>
         await _userService.GetAllAsync();
-
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] User newUser)
+    
+    [HttpPatch]
+    public async Task<ActionResult<Response<EditUserDto>>> Edit([FromBody] EditUserRequest user)
     {
-        await _userService.CreateAsync(newUser);
+        await _userService.EditAsync(user);
 
-        return CreatedAtAction(nameof(Get), newUser);
-    }
-
-    [HttpPost]
-    [Route("{id}")]
-    public async Task<IActionResult> Edit([FromRoute] string idUser, [FromBody] User newUser)
-    {
-        await _userService.EditAsync(idUser, newUser);
-
-        return CreatedAtAction(nameof(Get), newUser);
+        return CreatedAtAction(nameof(Get), user);
     }
 }

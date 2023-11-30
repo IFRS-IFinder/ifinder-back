@@ -1,3 +1,6 @@
+using IFinder.Application.Contracts.Documents.Dtos;
+using IFinder.Application.Contracts.Documents.Requests.User;
+using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Domain.Models;
 
 namespace IFinder.Application.Contracts.Services
@@ -5,7 +8,6 @@ namespace IFinder.Application.Contracts.Services
     public interface IUserService
     {
         Task<List<User>> GetAllAsync();
-        Task EditAsync(string idUser, User newUser);
-        Task CreateAsync(User newUser);
+        Task<Response<EditUserDto>> EditAsync(EditUserRequest user);
     }
 }
