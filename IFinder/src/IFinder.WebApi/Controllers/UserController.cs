@@ -17,14 +17,25 @@ public class UserController : ControllerBase
         _userService = userService;
 
     [HttpGet]
-    public async Task<List<User>> Get() =>
-        await _userService.GetAllAsync();
-    
+    [Route("{id}")]
+    public async Task<ActionResult<Response<GetCompleteUserDto>>> Get([FromRoute] string id)
+    {
+        var response = await _userService.GetUserComplete(id);
+            
+        if (response.IsErrorStatusCode())
+            return StatusCode(response.GetErrorCode(), response.GetErrorMessage());
+        
+        return Ok(response);
+    }
+
     [HttpPatch]
     public async Task<ActionResult<Response<EditUserDto>>> Edit([FromBody] EditUserRequest user)
     {
-        var editUser = await _userService.EditAsync(user);
-
-        return CreatedAtAction(nameof(Get), editUser);
+        var response = await _userService.EditAsync(user);
+        
+        if (response.IsErrorStatusCode())
+            return StatusCode(response.GetErrorCode(), response.GetErrorMessage());
+        
+        return Ok(response);
     }
 }

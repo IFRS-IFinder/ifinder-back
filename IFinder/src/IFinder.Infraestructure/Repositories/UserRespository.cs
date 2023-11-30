@@ -31,12 +31,6 @@ public class UserRespository : BaseRepository<User>, IUserRepository
         return null;
     }
 
-    public async Task<User?> GetUserById(string id)
-    {
-        var filter = Builders<User>.Filter.Eq("Id", id);
-        return await _collection.Find(filter).FirstOrDefaultAsync();
-    }
-
     public async Task<User?> EditUserAsync(string id, User editUser)
     {
         var filter = Builders<User>.Filter.Eq("Id", id);

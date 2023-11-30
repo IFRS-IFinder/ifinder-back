@@ -57,5 +57,24 @@ public class UserService : IUserService
         });
     }
 
+    public async Task<Response<GetCompleteUserDto>> GetUserComplete(string id)
+    {
+        var loggedUserId = _currentUserService.GetCurrentUserId();
+        var user = await _userRepository.GetByIdAsync(id);
+        var isAuthor = loggedUserId.Equals(id);
+        
+        if(user is null)
+            return new Response<GetCompleteUserDto>(HttpStatusCode.UnprocessableEntity, "Usuário não existe!");
 
+        return new Response<GetCompleteUserDto>(new GetCompleteUserDto()
+        {
+            Email = user.Email, 
+            Sex = user.Sex, 
+            Age = user.Age, 
+            Description = user.Description, 
+            Hobbies = user.Hobbies, 
+            isAuthor = isAuthor, 
+        });
+
+    }
 }

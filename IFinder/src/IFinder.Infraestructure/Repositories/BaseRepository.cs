@@ -23,6 +23,14 @@ public class BaseRepository<T> : IBaseRepository<T>
         return await _collection.Find(filter).FirstOrDefaultAsync();
     }
 
+    public async Task DeleteByIdAsync(string id)
+    {
+        var filter = Builders<T>.Filter.Eq("Id", id);
+        await _collection.DeleteOneAsync(filter);
+    }
+    
+
+
     public virtual async Task InsertAsync(T entity) 
         => await _collection.InsertOneAsync(entity);     
 }
