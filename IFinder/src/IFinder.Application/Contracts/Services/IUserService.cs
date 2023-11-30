@@ -9,5 +9,6 @@ namespace IFinder.Application.Contracts.Services
     {
         Task<List<User>> GetAllAsync();
         Task<Response<EditUserDto>> EditAsync(EditUserRequest user);
+        Task<Response<GetCompleteUserDto>> GetUserComplete(string id);
     }
 }

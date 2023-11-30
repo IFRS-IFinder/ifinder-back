@@ -19,7 +19,7 @@ public class UserRespository : BaseRepository<User>, IUserRepository
     {
         // var user = await _collection.FindAsync(u => u.Email == email.ToLower());
         //
-        
+
         var filter = Builders<User>.Filter.Eq("Email", email);
 
         var user = await _collection.Find(filter).FirstOrDefaultAsync();
@@ -28,12 +28,6 @@ public class UserRespository : BaseRepository<User>, IUserRepository
             return user;
 
         return null;
-    }
-
-    public async Task<User?> GetUserById(string id)
-    {
-        var filter = Builders<User>.Filter.Eq("Id", id);
-        return await _collection.Find(filter).FirstOrDefaultAsync();
     }
 
     public async Task<User?> EditUserAsync(string id, User editUser)
