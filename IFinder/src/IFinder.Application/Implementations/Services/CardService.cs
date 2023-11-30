@@ -13,11 +13,13 @@ public class CardService : ICardService
 {
     private readonly ICardRepository _cardRepository;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IUserRepository _userRepository;
 
-    public CardService(ICardRepository cardRepository, ICurrentUserService currentUserService)
+    public CardService(ICardRepository cardRepository, ICurrentUserService currentUserService, IUserRepository userRepository)
     {
         _cardRepository = cardRepository;
         _currentUserService = currentUserService;
+        _userRepository = userRepository;
     }
 
     public async Task<Response<CreateCardDto>> CreateAsync(CreateCardRequest request)
@@ -53,13 +55,13 @@ public class CardService : ICardService
         return new Response();
     }
 
-    public async Task<Response<IEnumerable<GetCardDto>>> ListFromUserAsync(string idUser)
+    public async Task<Response<IEnumerable<GetSimpleCardDto>>> ListFromUserAsync(string idUser)
     {
         var cards = await _cardRepository.GetAllByUserIdAsync(idUser);
-        return new Response<IEnumerable<GetCardDto>>(
-            cards.Select(x => new GetCardDto()
+        return new Response<IEnumerable<GetSimpleCardDto>>(
+            cards.Select(x => new GetSimpleCardDto()
             {
-                Text = x.Text,
+                TextCard = x.Text,
             })
         );
     }
@@ -68,11 +70,27 @@ public class CardService : ICardService
     {
         var userLoggedId = _currentUserService.GetCurrentUserId();
         var cards = await _cardRepository.GetHomeAsync(userLoggedId);
-        
-        return new Response<IEnumerable<GetCardDto>>(
-            cards.Select(x => new GetCardDto()
+
+        var cardsDto = new List<GetCardDto>();
+
+        foreach (var card in cards)
+        {
+            var authorCard = await _userRepository.GetByIdAsync(card.IdUser);
+            
+            var cardDto = new GetCardDto()
             {
-                Text = x.Text,
-            })
-        );    }
+                IdCard = card.Id,
+                IdAuthor = card.IdUser,
+                TextCard = card.Text,
+                SexAuthor = authorCard.Sex,
+                hoobiesAuthor = authorCard.Hobbies,
+                descriptionAuthor = authorCard.Description,
+                ageAuthor = authorCard.Age,
+                nameAuthor = authorCard.Name,
+            };
+            cardsDto.Add(cardDto);
+        }
+        
+        return new Response<IEnumerable<GetCardDto>>(cardsDto);    
+    }
 }

@@ -34,7 +34,7 @@ namespace IFinder.WebApi.Controllers
         
         [HttpGet]
         [Route("{idUser}")]
-        public async Task<ActionResult<IEnumerable<GetCardDto>>> ListFromUser([FromRoute] string idUser)
+        public async Task<ActionResult<IEnumerable<GetSimpleCardDto>>> ListFromUser([FromRoute] string idUser)
         {
             // TODO: validacao dos dados da request 
 
