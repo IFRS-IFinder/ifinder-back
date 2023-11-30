@@ -52,4 +52,15 @@ public class CardService : ICardService
         await _cardRepository.DeleteByIdAsync(idCard);
         return new Response();
     }
+
+    public async Task<Response<IEnumerable<GetCardDto>>> ListFromUserAsync(string idUser)
+    {
+        var cards = await _cardRepository.GetAllByUserIdAsync(idUser);
+        return new Response<IEnumerable<GetCardDto>>(
+            cards.Select(x => new GetCardDto()
+            {
+                Text = x.Text,
+            })
+            );
+    }
 }

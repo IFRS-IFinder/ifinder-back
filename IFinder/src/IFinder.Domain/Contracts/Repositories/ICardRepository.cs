@@ -4,5 +4,6 @@ namespace IFinder.Domain.Contracts.Repositories;
 
 public interface ICardRepository : IBaseRepository<Card>
 {
-    
+    Task<IEnumerable<Card>> GetAllByUserIdAsync(string idUser);
+
 }
