@@ -61,6 +61,18 @@ public class CardService : ICardService
             {
                 Text = x.Text,
             })
-            );
+        );
     }
+
+    public async Task<Response<IEnumerable<GetCardDto>>> ListHome()
+    {
+        var userLoggedId = _currentUserService.GetCurrentUserId();
+        var cards = await _cardRepository.GetHomeAsync(userLoggedId);
+        
+        return new Response<IEnumerable<GetCardDto>>(
+            cards.Select(x => new GetCardDto()
+            {
+                Text = x.Text,
+            })
+        );    }
 }

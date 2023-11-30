@@ -46,6 +46,20 @@ namespace IFinder.WebApi.Controllers
             return Ok(response);
         }
         
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<GetCardDto>>> ListHome()
+        {
+            // TODO: validacao dos dados da request 
+
+            var response = await _cardService.ListHome();
+
+            if (response.IsErrorStatusCode())
+                return StatusCode(response.GetErrorCode(), response.GetErrorMessage());
+
+            return Ok(response);
+        }
+        
+        
         [HttpDelete]
         [Route("{idCard}")]
         public async Task<ActionResult<Response>> Delete([FromRoute] string idCard)

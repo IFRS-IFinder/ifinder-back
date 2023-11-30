@@ -9,4 +9,5 @@ public interface ICardService
     Task<Response<CreateCardDto>> CreateAsync(CreateCardRequest request);
     Task<Response> DeleteAsync(string idCard);
     Task<Response<IEnumerable<GetCardDto>>> ListFromUserAsync(string idUser);
+    Task<Response<IEnumerable<GetCardDto>>> ListHome();
 }
