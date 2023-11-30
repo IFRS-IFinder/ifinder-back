@@ -1,9 +1,8 @@
-﻿
-namespace IFinder.Domain.Contracts.Repositories
+﻿namespace IFinder.Domain.Contracts.Repositories;
+
+public interface IBaseRepository<T>
 {
-    public interface IBaseRepository<T>
-    {
-        Task<List<T>> GetAllAsync();
-        Task InsertAsync(T entity);
-    }
+    Task<List<T>> GetAllAsync();
+    Task InsertAsync(T entity);
+    Task<T?> GetByIdAsync(string id);
 }

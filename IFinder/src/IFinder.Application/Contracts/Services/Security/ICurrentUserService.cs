@@ -1,8 +1,7 @@
 ﻿
-namespace IFootball.Application.Contracts.Services.Core
+namespace IFinder.Application.Contracts.Services.Security;
+
+public interface ICurrentUserService
 {
-    public interface ICurrentUserService
-    {
-        public string GetCurrentUserId();
-    }
+    public string GetCurrentUserId();
 }

@@ -23,8 +23,8 @@ public class UserController : ControllerBase
     [HttpPatch]
     public async Task<ActionResult<Response<EditUserDto>>> Edit([FromBody] EditUserRequest user)
     {
-        await _userService.EditAsync(user);
+        var editUser = await _userService.EditAsync(user);
 
-        return CreatedAtAction(nameof(Get), user);
+        return CreatedAtAction(nameof(Get), editUser);
     }
 }
