@@ -1,8 +1,9 @@
-﻿using IFinder.Core;
+﻿using IFinder.Application.Contracts.Documents.Requests.User;
+using IFinder.Core;
 using IFinder.Domain.Contracts.Repositories;
 using IFinder.Domain.Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Reflection;
 
 namespace IFinder.Infraestructure.Repositories;
 public class UserRespository : BaseRepository<User>, IUserRepository
@@ -33,19 +34,15 @@ public class UserRespository : BaseRepository<User>, IUserRepository
     public async Task<User?> EditUserAsync(string id, User editUser)
     {
         var filter = Builders<User>.Filter.Eq("Id", id);
-        var update = Builders<User>.Update.Set(user => user, editUser);
-        //var user = await _collection.Find(filter).FirstOrDefaultAsync();
-        
-        var user = await _collection.UpdateOneAsync(filter, update);
+
+        var user = await _collection.ReplaceOneAsync(filter, editUser);
 
         if (user.IsAcknowledged && user.MatchedCount > 0)
         {
-            return editUser;
+            return new User { };
         }
 
-
         return null;
-
     }
 
     public async Task<bool> UserExistsByEmail(string email)
@@ -53,5 +50,14 @@ public class UserRespository : BaseRepository<User>, IUserRepository
         var filter = Builders<User>.Filter.Eq("Email", email);
         var user = await _collection.Find(filter).FirstOrDefaultAsync();
         return user is not null;
+    }
+
+    public static void ChangeProp<T,U>(T entity, U editEntity)
+    {
+        foreach (var prop in entity.GetType().GetProperties())
+        {
+            PropertyInfo? property = editEntity?.GetType().GetProperty(prop.Name);
+            property?.SetValue(editEntity, prop.GetValue(entity));
+        }
     }
 }

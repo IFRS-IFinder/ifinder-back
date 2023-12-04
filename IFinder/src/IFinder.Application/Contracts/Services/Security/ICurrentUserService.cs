@@ -1,8 +1,7 @@
 ﻿
-namespace IFinder.Application.Contracts.Services.Security
+namespace IFinder.Application.Contracts.Services.Security;
+
+public interface ICurrentUserService
 {
-    public interface ICurrentUserService
-    {
-        public string GetCurrentUserId();
-    }
+    public string GetCurrentUserId();
 }

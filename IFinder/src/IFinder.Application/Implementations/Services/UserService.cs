@@ -7,6 +7,9 @@ using IFinder.Application.Contracts.Services;
 using IFinder.Application.Contracts.Services.Security;
 using IFinder.Domain.Contracts.Repositories;
 using IFinder.Domain.Models;
+using IFinder.Application.Contracts.Services.Security;
+using System.Reflection;
+using IFinder.Core;
 
 namespace IFinder.Application.Implementations.Services;
 
@@ -21,7 +24,7 @@ public class UserService : IUserService
         _currentUserService = currentUserService;
     }
 
-    public async Task<List<User>> GetAllAsync() 
+    public async Task<List<User>> GetAllAsync()
         => await _userRepository.GetAllAsync();
 
     public async Task<Response<GetSimpleUserDto>> GetUserSimple(string id)
@@ -49,16 +52,30 @@ public class UserService : IUserService
     {
         var idUser = _currentUserService.GetCurrentUserId();
         var user = await _userRepository.GetByIdAsync(idUser);
-        
+
         if (user is null)
             return new Response<EditUserDto>(HttpStatusCode.UnprocessableEntity, "Usuário não existe!");
-        
+
         //If se tem senha ou não
-        
+
+        foreach (PropertyInfo? prop in userRequest.GetType().GetProperties())
+        {
+            var propValue = prop?.GetValue(userRequest);
+            if (propValue is not null)
+            {
+                if (prop.Name == "Password")
+                {
+                    propValue = PasswordHasher.HashPassword(propValue.ToString());
+                }
+                user.GetType().GetProperty(prop.Name).SetValue(user, propValue);
+            }
+        }
+
         await _userRepository.EditUserAsync(idUser, user);
+
         return new Response<EditUserDto>(new EditUserDto()
         {
-            Id =  user.Id,
+            Id = user.Id,
             Name = user.Name,
         });
     }

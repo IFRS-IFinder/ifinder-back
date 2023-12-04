@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IFinder.Application\IFinder.Application.csproj" />
     <ProjectReference Include="..\IFinder.Domain\IFinder.Domain.csproj" />
     <ProjectReference Include="..\IFinder.Core\IFinder.Core.csproj" />
   </ItemGroup>
