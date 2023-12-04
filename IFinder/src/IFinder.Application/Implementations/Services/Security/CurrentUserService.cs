@@ -1,5 +1,4 @@
-﻿
-using IFootball.Application.Contracts.Services.Core;
+﻿using IFinder.Application.Contracts.Services.Security;
 using Microsoft.AspNetCore.Http;
 
 namespace IFinder.Application.Implementations.Services.Security

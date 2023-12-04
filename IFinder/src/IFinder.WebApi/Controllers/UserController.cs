@@ -1,8 +1,8 @@
 using IFinder.Application.Contracts.Documents.Dtos;
+using IFinder.Application.Contracts.Documents.Dtos.User;
 using IFinder.Application.Contracts.Documents.Requests.User;
 using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Application.Contracts.Services;
-using IFinder.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IFinder.WebApi.Controllers;
@@ -17,8 +17,8 @@ public class UserController : ControllerBase
         _userService = userService;
 
     [HttpGet]
-    [Route("{id}")]
-    public async Task<ActionResult<Response<GetCompleteUserDto>>> Get([FromRoute] string id)
+    [Route("{id}/complete")]
+    public async Task<ActionResult<Response<GetCompleteUserDto>>> GetCompleteUser([FromRoute] string id)
     {
         var response = await _userService.GetUserComplete(id);
             
@@ -28,6 +28,19 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult<Response<GetSimpleUserDto>>> GetSimpleUser([FromRoute] string id)
+    {
+        var response = await _userService.GetUserSimple(id);
+            
+        if (response.IsErrorStatusCode())
+            return StatusCode(response.GetErrorCode(), response.GetErrorMessage());
+        
+        return Ok(response);
+    }
+
+    
     [HttpPatch]
     public async Task<ActionResult<Response<EditUserDto>>> Edit([FromBody] EditUserRequest user)
     {

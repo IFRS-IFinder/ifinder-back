@@ -3,9 +3,9 @@ using IFinder.Application.Contracts.Documents.Dtos.Card;
 using IFinder.Application.Contracts.Documents.Requests.Card;
 using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Application.Contracts.Services;
+using IFinder.Application.Contracts.Services.Security;
 using IFinder.Domain.Contracts.Repositories;
 using IFinder.Domain.Models;
-using IFootball.Application.Contracts.Services.Core;
 
 namespace IFinder.Application.Implementations.Services;
 
@@ -58,6 +58,7 @@ public class CardService : ICardService
     public async Task<Response<IEnumerable<GetSimpleCardDto>>> ListFromUserAsync(string idUser)
     {
         var cards = await _cardRepository.GetAllByUserIdAsync(idUser);
+        
         return new Response<IEnumerable<GetSimpleCardDto>>(
             cards.Select(x => new GetSimpleCardDto()
             {

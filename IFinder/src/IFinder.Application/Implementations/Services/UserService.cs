@@ -1,11 +1,12 @@
 using System.Net;
 using IFinder.Application.Contracts.Documents.Dtos;
+using IFinder.Application.Contracts.Documents.Dtos.User;
 using IFinder.Application.Contracts.Documents.Requests.User;
 using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Application.Contracts.Services;
+using IFinder.Application.Contracts.Services.Security;
 using IFinder.Domain.Contracts.Repositories;
 using IFinder.Domain.Models;
-using IFootball.Application.Contracts.Services.Core;
 
 namespace IFinder.Application.Implementations.Services;
 
@@ -22,6 +23,27 @@ public class UserService : IUserService
 
     public async Task<List<User>> GetAllAsync() 
         => await _userRepository.GetAllAsync();
+
+    public async Task<Response<GetSimpleUserDto>> GetUserSimple(string id)
+    {
+        var loggedUserId = _currentUserService.GetCurrentUserId();
+        var user = await _userRepository.GetByIdAsync(id);
+        var isAuthor = loggedUserId.Equals(id);
+        
+        if(user is null)
+            return new Response<GetSimpleUserDto>(HttpStatusCode.UnprocessableEntity, "Usuário não existe!");
+
+        return new Response<GetSimpleUserDto>(new GetSimpleUserDto()
+        {
+            Name = user.Name,
+            Sex = user.Sex, 
+            Age = user.Age, 
+            Description = user.Description, 
+            Hobbies = user.Hobbies, 
+            isAuthor = isAuthor, 
+        });
+
+    }
 
     public async Task<Response<EditUserDto>> EditAsync(EditUserRequest userRequest)
     {
@@ -44,9 +66,10 @@ public class UserService : IUserService
     public async Task<Response<GetCompleteUserDto>> GetUserComplete(string id)
     {
         var loggedUserId = _currentUserService.GetCurrentUserId();
-        var user = await _userRepository.GetByIdAsync(id);
-        var isAuthor = loggedUserId.Equals(id);
+        if(loggedUserId != id)
+            return new Response<GetCompleteUserDto>(HttpStatusCode.Forbidden, "Este usuário não é seu!");
         
+        var user = await _userRepository.GetByIdAsync(id);
         if(user is null)
             return new Response<GetCompleteUserDto>(HttpStatusCode.UnprocessableEntity, "Usuário não existe!");
 
@@ -57,7 +80,6 @@ public class UserService : IUserService
             Age = user.Age, 
             Description = user.Description, 
             Hobbies = user.Hobbies, 
-            isAuthor = isAuthor, 
         });
 
     }

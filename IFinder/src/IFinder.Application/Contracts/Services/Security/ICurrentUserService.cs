@@ -1,5 +1,5 @@
 ﻿
-namespace IFootball.Application.Contracts.Services.Core
+namespace IFinder.Application.Contracts.Services.Security
 {
     public interface ICurrentUserService
     {
