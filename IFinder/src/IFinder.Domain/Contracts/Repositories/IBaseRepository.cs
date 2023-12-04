@@ -1,6 +1,4 @@
-﻿namespace IFinder.Domain.Contracts.Repositories;
-
-namespace IFinder.Domain.Contracts.Repositories
+﻿namespace IFinder.Domain.Contracts.Repositories
 {
     public interface IBaseRepository<T>
     {

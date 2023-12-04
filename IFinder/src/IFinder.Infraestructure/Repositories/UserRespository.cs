@@ -1,5 +1,4 @@
-﻿using IFinder.Application.Contracts.Documents.Requests.User;
-using IFinder.Core;
+﻿using IFinder.Core;
 using IFinder.Domain.Contracts.Repositories;
 using IFinder.Domain.Models;
 using MongoDB.Driver;
