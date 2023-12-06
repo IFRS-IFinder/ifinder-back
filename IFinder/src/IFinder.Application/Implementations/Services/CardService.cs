@@ -94,6 +94,6 @@ public class CardService : ICardService
         }
         
         return new Response<Page<GetCardDto>>(
-            new Page<GetCardDto>(cardsDto, cards.TotalPages, cards.TotalRegisters, cards.LastPage));    
+            new Page<GetCardDto>(cardsDto, cards.TotalPages, cards.TotalRegisters, cards.IsLastPage));    
     }
 }
