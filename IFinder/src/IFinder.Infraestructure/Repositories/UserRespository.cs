@@ -50,13 +50,5 @@ public class UserRespository : BaseRepository<User>, IUserRepository
         var user = await _collection.Find(filter).FirstOrDefaultAsync();
         return user is not null;
     }
-
-    public static void ChangeProp<T,U>(T entity, U editEntity)
-    {
-        foreach (var prop in entity.GetType().GetProperties())
-        {
-            PropertyInfo? property = editEntity?.GetType().GetProperty(prop.Name);
-            property?.SetValue(editEntity, prop.GetValue(entity));
-        }
-    }
+    
 }

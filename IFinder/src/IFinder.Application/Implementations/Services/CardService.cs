@@ -4,6 +4,7 @@ using IFinder.Application.Contracts.Documents.Requests.Card;
 using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Application.Contracts.Services;
 using IFinder.Application.Contracts.Services.Security;
+using IFinder.Domain.Contracts.Page;
 using IFinder.Domain.Contracts.Repositories;
 using IFinder.Domain.Models;
 
@@ -55,26 +56,26 @@ public class CardService : ICardService
         return new Response();
     }
 
-    public async Task<Response<IEnumerable<GetSimpleCardDto>>> ListFromUserAsync(string idUser)
+    public async Task<Response<Page<GetSimpleCardDto>>> ListFromUserAsync(string idUser, Pageable pageable)
     {
-        var cards = await _cardRepository.GetAllByUserIdAsync(idUser);
+        var cards = await _cardRepository.GetAllByUserIdAsync(idUser, pageable);
         
-        return new Response<IEnumerable<GetSimpleCardDto>>(
-            cards.Select(x => new GetSimpleCardDto()
+        return new Response<Page<GetSimpleCardDto>>(
+            cards.Map(x => new GetSimpleCardDto()
             {
                 TextCard = x.Text,
             })
         );
     }
 
-    public async Task<Response<IEnumerable<GetCardDto>>> ListHome()
+    public async Task<Response<Page<GetCardDto>>> ListHome(Pageable pageable)
     {
         var userLoggedId = _currentUserService.GetCurrentUserId();
-        var cards = await _cardRepository.GetHomeAsync(userLoggedId);
+        var cards = await _cardRepository.GetHomeAsync(userLoggedId, pageable);
 
         var cardsDto = new List<GetCardDto>();
 
-        foreach (var card in cards)
+        foreach (var card in cards.Data)
         {
             var authorCard = await _userRepository.GetByIdAsync(card.IdUser);
             
@@ -92,6 +93,7 @@ public class CardService : ICardService
             cardsDto.Add(cardDto);
         }
         
-        return new Response<IEnumerable<GetCardDto>>(cardsDto);    
+        return new Response<Page<GetCardDto>>(
+            new Page<GetCardDto>(cardsDto, cards.TotalPages, cards.TotalRegisters, cards.LastPage));    
     }
 }

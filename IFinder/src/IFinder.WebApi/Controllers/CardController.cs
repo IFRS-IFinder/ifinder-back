@@ -4,6 +4,7 @@ using IFinder.Application.Contracts.Documents.Requests.Card;
 using IFinder.Application.Contracts.Documents.Requests.User;
 using IFinder.Application.Contracts.Documents.Responses;
 using IFinder.Application.Contracts.Services;
+using IFinder.Domain.Contracts.Page;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IFinder.WebApi.Controllers
@@ -34,11 +35,11 @@ namespace IFinder.WebApi.Controllers
         
         [HttpGet]
         [Route("{idUser}")]
-        public async Task<ActionResult<IEnumerable<GetSimpleCardDto>>> ListFromUser([FromRoute] string idUser)
+        public async Task<ActionResult<Page<GetSimpleCardDto>>> ListFromUser([FromRoute] string idUser, [FromQuery] Pageable pageable)
         {
             // TODO: validacao dos dados da request 
 
-            var response = await _cardService.ListFromUserAsync(idUser);
+            var response = await _cardService.ListFromUserAsync(idUser, pageable);
 
             if (response.IsErrorStatusCode())
                 return StatusCode(response.GetErrorCode(), response.GetErrorMessage());
@@ -47,11 +48,11 @@ namespace IFinder.WebApi.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetCardDto>>> ListHome()
+        public async Task<ActionResult<Page<GetCardDto>>> ListHome([FromQuery] Pageable pageable)
         {
             // TODO: validacao dos dados da request 
 
-            var response = await _cardService.ListHome();
+            var response = await _cardService.ListHome(pageable);
 
             if (response.IsErrorStatusCode())
                 return StatusCode(response.GetErrorCode(), response.GetErrorMessage());

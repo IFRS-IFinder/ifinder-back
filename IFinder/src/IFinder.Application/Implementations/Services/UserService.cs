@@ -34,7 +34,7 @@ public class UserService : IUserService
         var isAuthor = loggedUserId.Equals(id);
         
         if(user is null)
-            return new Response<GetSimpleUserDto>(HttpStatusCode.UnprocessableEntity, "Usuário não existe!");
+            return new Response<GetSimpleUserDto>(HttpStatusCode.NotFound, "Usuário não existe!");
 
         return new Response<GetSimpleUserDto>(new GetSimpleUserDto()
         {
@@ -55,9 +55,7 @@ public class UserService : IUserService
 
         if (user is null)
             return new Response<EditUserDto>(HttpStatusCode.UnprocessableEntity, "Usuário não existe!");
-
-        //If se tem senha ou não
-
+        
         foreach (PropertyInfo? prop in userRequest.GetType().GetProperties())
         {
             var propValue = prop?.GetValue(userRequest);
